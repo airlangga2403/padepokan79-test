@@ -1,15 +1,10 @@
 package com.booking.models;
 
+import lombok.*;
+
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class Reservation {
@@ -21,17 +16,26 @@ public class Reservation {
     private String workstage;
     //   workStage (In Process, Finish, Canceled)
 
-    public Reservation(String reservationId, Customer customer, Employee employee, List<Service> services,
-            String workstage) {
+    public Reservation(String reservationId, Customer customer, Employee employee, List<Service> services, Double reservationPrice,
+                       String workstage) {
         this.reservationId = reservationId;
         this.customer = customer;
         this.employee = employee;
         this.services = services;
-        this.reservationPrice = calculateReservationPrice();
+        this.reservationPrice = calculateReservationPrice(reservationPrice, customer);
         this.workstage = workstage;
-    };
-
-    private double calculateReservationPrice(){
-        return 0;
     }
+
+    private double calculateReservationPrice(double reservationPrice, Customer customer) {
+        String membership = customer.getMember().getMembershipName();
+        double discount = 0;
+        if (membership.equalsIgnoreCase("gold")) {
+            discount = 0.1;
+        } else if (membership.equalsIgnoreCase("silver")) {
+            discount = 0.05;
+        }
+
+        return reservationPrice * (1 - discount);
+    }
+
 }

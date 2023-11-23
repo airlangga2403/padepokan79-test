@@ -17,6 +17,8 @@ public class PersonRepository {
         Membership member2 = new Membership("Mem-02", "Silver");
         Membership member3 = new Membership("Mem-03", "Gold");
 
+        // Customer Input
+
         Person customer1 = Customer.builder()
             .id("Cust-01")
             .name("Budi")
@@ -48,6 +50,8 @@ public class PersonRepository {
             .member(member2)
             .wallet(1_000_000)
             .build();
+
+        // Employee Batas insert
         
         Person employee1 = Employee.builder()
         .id("Emp-01")
